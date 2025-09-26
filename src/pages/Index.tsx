@@ -13,7 +13,7 @@ const Index = () => {
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-2">
               <Satellite className="h-8 w-8 text-primary" />
-              <h1 className="text-xl font-bold text-foreground">NASA Earth Observer</h1>
+              <h1 className="text-xl font-bold text-foreground">ClimaCerto</h1>
             </div>
             <Link to="/dashboard">
               <Button variant="space">Iniciar Dashboard</Button>
@@ -35,11 +35,11 @@ const Index = () => {
         
         <div className="container mx-auto relative z-10 text-center">
           <h1 className="text-5xl md:text-7xl font-bold mb-6 bg-atmosphere-gradient bg-clip-text text-transparent">
-            Observação da Terra NASA
+            ClimaCerto
           </h1>
           <p className="text-xl md:text-2xl text-muted-foreground max-w-3xl mx-auto mb-8 leading-relaxed">
-            Crie painéis personalizados para analisar probabilidades climáticas usando dados de observação da Terra da NASA. 
-            Explore temperatura, precipitação, qualidade do ar e muito mais.
+            Descubra as condições climáticas ideais para suas atividades ao ar livre. 
+            Análise inteligente de adequação baseada em dados históricos da NASA.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link to="/dashboard">

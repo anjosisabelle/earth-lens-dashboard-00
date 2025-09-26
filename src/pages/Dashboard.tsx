@@ -51,7 +51,7 @@ const Dashboard = () => {
           <div className="flex items-center justify-between">
             <Link to="/" className="flex items-center space-x-2">
               <div className="h-8 w-8 rounded-full bg-atmosphere-gradient"></div>
-              <h1 className="text-xl font-bold text-foreground">NASA Earth Observer</h1>
+              <h1 className="text-xl font-bold text-foreground">ClimaCerto</h1>
             </Link>
             <div className="flex items-center space-x-4">
               <Badge variant="secondary" className="bg-primary/20 text-primary border-primary/30">
