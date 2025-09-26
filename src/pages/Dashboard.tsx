@@ -21,11 +21,14 @@ import {
 import LocationSelector from "@/components/LocationSelector";
 import DataVisualization from "@/components/DataVisualization";
 import ClimateFilters from "@/components/ClimateFilters";
+import ActivitySelector, { Activity } from "@/components/ActivitySelector";
+import ActivitySuitabilityIndex from "@/components/ActivitySuitabilityIndex";
 import { Link } from "react-router-dom";
 
 const Dashboard = () => {
   const [selectedLocation, setSelectedLocation] = useState<{lat: number, lng: number, name: string} | null>(null);
   const [selectedVariables, setSelectedVariables] = useState<string[]>(['temperature']);
+  const [selectedActivity, setSelectedActivity] = useState<Activity | null>(null);
   const [dateRange, setDateRange] = useState<{start: string, end: string}>({
     start: '',
     end: ''
@@ -134,11 +137,27 @@ const Dashboard = () => {
           </CardContent>
         </Card>
 
+        {/* Índice de Adequação de Atividade (IAA) */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <ActivitySelector
+            selectedActivity={selectedActivity}
+            onActivitySelect={setSelectedActivity}
+          />
+          <ActivitySuitabilityIndex
+            location={selectedLocation}
+            activity={selectedActivity}
+            dateRange={dateRange}
+          />
+        </div>
+
         {/* Visualizações */}
         <Tabs defaultValue="overview" className="space-y-6">
-          <TabsList className="grid w-full grid-cols-4 bg-secondary/50 backdrop-blur-md">
+          <TabsList className="grid w-full grid-cols-5 bg-secondary/50 backdrop-blur-md">
             <TabsTrigger value="overview" className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">
               Visão Geral
+            </TabsTrigger>
+            <TabsTrigger value="iaa" className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">
+              IAA Detalhado
             </TabsTrigger>
             <TabsTrigger value="probability" className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">
               Probabilidades
@@ -158,6 +177,55 @@ const Dashboard = () => {
               dateRange={dateRange}
               type="overview"
             />
+          </TabsContent>
+
+          <TabsContent value="iaa" className="space-y-6">
+            <div className="grid grid-cols-1 gap-6">
+              <ActivitySuitabilityIndex
+                location={selectedLocation}
+                activity={selectedActivity}
+                dateRange={dateRange}
+              />
+              {selectedActivity && (
+                <Card className="bg-card/50 backdrop-blur-md border-border/20 shadow-data-card">
+                  <CardHeader>
+                    <CardTitle className="flex items-center gap-2">
+                      <TrendingUp className="h-5 w-5 text-primary" />
+                      Análise Detalhada - {selectedActivity.name}
+                    </CardTitle>
+                    <CardDescription>
+                      Histórico de adequação e recomendações personalizadas
+                    </CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="space-y-4">
+                      <div className="p-4 bg-data-gradient rounded-lg border border-primary/20">
+                        <h4 className="font-semibold mb-2 text-foreground">Sobre o IAA:</h4>
+                        <p className="text-sm text-muted-foreground mb-3">
+                          O Índice de Adequação de Atividade (IAA) é calculado com base em dados históricos 
+                          da NASA, considerando temperatura, umidade, velocidade do vento e precipitação. 
+                          O índice varia de 0-100, onde valores mais altos indicam melhores condições.
+                        </p>
+                        <div className="grid grid-cols-2 gap-4 text-xs">
+                          <div>
+                            <strong className="text-green-400">80-100:</strong> Condições excelentes
+                          </div>
+                          <div>
+                            <strong className="text-blue-400">60-79:</strong> Condições boas
+                          </div>
+                          <div>
+                            <strong className="text-yellow-400">40-59:</strong> Condições regulares
+                          </div>
+                          <div>
+                            <strong className="text-red-400">0-39:</strong> Condições desfavoráveis
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+              )}
+            </div>
           </TabsContent>
 
           <TabsContent value="probability" className="space-y-6">
