@@ -3,10 +3,11 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { MapView } from "@/components/MapView";
-import { Satellite, Search, Mountain, Waves, TreePine } from "lucide-react";
+import { ClimateAnalysis } from "@/components/ClimateAnalysis";
+import { Satellite, Search, Mountain, Waves, TreePine, Bike, Tent, Camera, Fish, Sun, Wind, Snowflake, Umbrella } from "lucide-react";
 import { cn } from "@/lib/utils";
 
-type Activity = "trilha" | "praia" | "piquenique" | null;
+type Activity = "trilha" | "praia" | "piquenique" | "ciclismo" | "camping" | "fotografia" | "pesca" | "surf" | "parapente" | "esqui" | "caiaque" | "observacao" | null;
 
 const Index = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -19,6 +20,15 @@ const Index = () => {
     { id: "trilha" as Activity, icon: Mountain, label: "Trilha" },
     { id: "praia" as Activity, icon: Waves, label: "Praia" },
     { id: "piquenique" as Activity, icon: TreePine, label: "Piquenique" },
+    { id: "ciclismo" as Activity, icon: Bike, label: "Ciclismo" },
+    { id: "camping" as Activity, icon: Tent, label: "Camping" },
+    { id: "fotografia" as Activity, icon: Camera, label: "Fotografia" },
+    { id: "pesca" as Activity, icon: Fish, label: "Pesca" },
+    { id: "surf" as Activity, icon: Waves, label: "Surf" },
+    { id: "parapente" as Activity, icon: Wind, label: "Parapente" },
+    { id: "esqui" as Activity, icon: Snowflake, label: "Esqui" },
+    { id: "caiaque" as Activity, icon: Waves, label: "Caiaque" },
+    { id: "observacao" as Activity, icon: Sun, label: "Observação" },
   ];
 
   const handleAnalyze = () => {
@@ -69,7 +79,7 @@ const Index = () => {
               <h2 className="text-lg font-semibold mb-3 text-card-foreground">
                 Tipo de atividade:
               </h2>
-              <div className="grid grid-cols-3 gap-3">
+              <div className="grid grid-cols-3 gap-2 max-h-96 overflow-y-auto">
                 {activities.map((activity) => {
                   const Icon = activity.icon;
                   return (
@@ -77,14 +87,14 @@ const Index = () => {
                       key={activity.id}
                       onClick={() => setSelectedActivity(activity.id)}
                       className={cn(
-                        "flex flex-col items-center justify-center p-4 rounded-lg border-2 transition-all",
+                        "flex flex-col items-center justify-center p-3 rounded-lg border-2 transition-all",
                         selectedActivity === activity.id
                           ? "border-primary bg-primary/10"
                           : "border-border bg-card hover:border-primary/50"
                       )}
                     >
-                      <Icon className="h-8 w-8 mb-2 text-primary" />
-                      <span className="text-sm font-medium text-card-foreground">
+                      <Icon className="h-6 w-6 mb-1 text-primary" />
+                      <span className="text-xs font-medium text-card-foreground">
                         {activity.label}
                       </span>
                     </button>
@@ -118,9 +128,22 @@ const Index = () => {
           </div>
         </aside>
 
-        {/* Map */}
-        <main className="flex-1 relative">
-          <MapView center={mapCenter} zoom={4} marker={marker} />
+        {/* Map and Analysis */}
+        <main className="flex-1 flex flex-col">
+          <div className="flex-1 relative">
+            <MapView center={mapCenter} zoom={4} marker={marker} />
+          </div>
+          
+          {/* Climate Analysis Section */}
+          {searchTerm && selectedActivity && adventureDate && (
+            <div className="border-t border-border bg-card p-4">
+              <ClimateAnalysis 
+                location={searchTerm}
+                activity={selectedActivity}
+                date={adventureDate}
+              />
+            </div>
+          )}
         </main>
       </div>
     </div>
