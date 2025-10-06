@@ -60,40 +60,40 @@ const climateVariables: ClimateVariable[] = [
   },
   {
     id: 'visibility',
-    name: 'Visibilidade',
-    description: 'Distância de visibilidade horizontal',
+    name: 'Visibility',
+    description: 'Horizontal visibility distance',
     icon: <Eye className="h-4 w-4" />,
     unit: 'km',
     category: 'environmental'
   },
   {
     id: 'solar_radiation',
-    name: 'Radiação Solar',
-    description: 'Radiação solar incidente',
+    name: 'Solar Radiation',
+    description: 'Incident solar radiation',
     icon: <Sun className="h-4 w-4" />,
     unit: 'W/m²',
     category: 'environmental'
   },
   {
     id: 'cloud_cover',
-    name: 'Cobertura de Nuvens',
-    description: 'Percentual de cobertura de nuvens',
+    name: 'Cloud Cover',
+    description: 'Cloud cover percentage',
     icon: <CloudRain className="h-4 w-4" />,
     unit: '%',
     category: 'atmospheric'
   },
   {
     id: 'pressure',
-    name: 'Pressão Atmosférica',
-    description: 'Pressão barométrica ao nível do mar',
+    name: 'Atmospheric Pressure',
+    description: 'Sea level barometric pressure',
     icon: <Gauge className="h-4 w-4" />,
     unit: 'hPa',
     category: 'atmospheric'
   },
   {
     id: 'air_quality',
-    name: 'Qualidade do Ar',
-    description: 'Índice de qualidade do ar (AQI)',
+    name: 'Air Quality',
+    description: 'Air Quality Index (AQI)',
     icon: <TreePine className="h-4 w-4" />,
     unit: 'AQI',
     category: 'environmental'

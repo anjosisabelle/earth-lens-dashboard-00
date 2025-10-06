@@ -4,6 +4,7 @@ import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { MapView } from "@/components/MapView";
 import { ClimateAnalysis } from "@/components/ClimateAnalysis";
+import LocationSelector from "@/components/LocationSelector";
 import { Satellite, Search, Mountain, Waves, TreePine, Bike, Tent, Camera, Fish, Sun, Wind, Snowflake, Umbrella } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { supabase } from "@/integrations/supabase/client";
@@ -12,10 +13,11 @@ import { toast } from "@/hooks/use-toast";
 type Activity = "trilha" | "praia" | "piquenique" | "ciclismo" | "camping" | "fotografia" | "pesca" | "surf" | "parapente" | "esqui" | "caiaque" | "observacao" | null;
 
 const Index = () => {
-  const [searchTerm, setSearchTerm] = useState("");
+  const [selectedLocation, setSelectedLocation] = useState<{ lat: number; lng: number; name: string } | null>(null);
   const [selectedActivity, setSelectedActivity] = useState<Activity>(null);
   const [adventureDate, setAdventureDate] = useState("");
   const [mapCenter, setMapCenter] = useState<[number, number]>([-15, -50]);
+  const [mapZoom, setMapZoom] = useState<number>(4);
   const [marker, setMarker] = useState<[number, number] | null>(null);
 
   const activities = [
@@ -34,7 +36,7 @@ const Index = () => {
   ];
 
   const handleAnalyze = () => {
-    console.log("Analyzing climate for:", { searchTerm, selectedActivity, adventureDate });
+    console.log("Analyzing climate for:", { selectedLocation, selectedActivity, adventureDate });
   };
 
   const handleFetchWeather = async () => {
@@ -85,6 +87,12 @@ const Index = () => {
     }
   };
 
+  const handleZoomToLocation = (location: { lat: number; lng: number; name: string }) => {
+    setMapCenter([location.lat, location.lng]);
+    setMapZoom(12); // Zoom in when selecting from dropdown
+    setMarker([location.lat, location.lng]);
+  };
+
   return (
     <div className="min-h-screen bg-background flex flex-col">
       {/* Navigation */}
@@ -107,21 +115,14 @@ const Index = () => {
               <h2 className="text-lg font-semibold mb-3 text-card-foreground">
                 Select location
               </h2>
-              <div className="relative">
-                <Input
-                  placeholder="City, park..."
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                  className="pr-10"
-                />
-                <Button
-                  size="sm"
-                  className="absolute right-1 top-1 h-8 w-8 p-0"
-                  onClick={handleFetchWeather}
-                >
-                  <Search className="h-4 w-4" />
-                </Button>
-              </div>
+              <LocationSelector
+                onLocationSelect={(location) => {
+                  setSelectedLocation(location);
+                  setMarker([location.lat, location.lng]);
+                }}
+                selectedLocation={selectedLocation}
+                onZoomToLocation={handleZoomToLocation}
+              />
             </div>
 
             {/* Activity Type */}
@@ -168,10 +169,21 @@ const Index = () => {
 
             {/* Analyze Button */}
             <Button
-              onClick={handleAnalyze}
+              onClick={handleFetchWeather}
               className="w-full"
               size="lg"
-              disabled={!searchTerm || !selectedActivity || !adventureDate}
+              disabled={!selectedLocation || !selectedActivity || !adventureDate}
+            >
+              <Search className="h-4 w-4 mr-2" />
+              Fetch Weather Data
+            </Button>
+            
+            <Button
+              onClick={handleAnalyze}
+              variant="outline"
+              className="w-full"
+              size="lg"
+              disabled={!selectedLocation || !selectedActivity || !adventureDate}
             >
               Analyze Climate
             </Button>
@@ -183,19 +195,20 @@ const Index = () => {
           <div className="flex-1 relative">
             <MapView 
               center={mapCenter} 
-              zoom={4} 
+              zoom={mapZoom} 
               marker={marker}
               onLocationSelect={(lat, lon) => {
                 setMarker([lat, lon]);
               }}
+              onZoomChange={(zoom) => setMapZoom(zoom)}
             />
           </div>
           
           {/* Climate Analysis Section */}
-          {searchTerm && selectedActivity && adventureDate && (
+          {selectedLocation && selectedActivity && adventureDate && (
             <div className="border-t border-border bg-card p-4">
               <ClimateAnalysis 
-                location={searchTerm}
+                location={selectedLocation.name}
                 activity={selectedActivity}
                 date={adventureDate}
               />

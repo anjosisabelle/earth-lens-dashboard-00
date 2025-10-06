@@ -18,9 +18,10 @@ interface Location {
 interface LocationSelectorProps {
   onLocationSelect: (location: Location) => void;
   selectedLocation: Location | null;
+  onZoomToLocation?: (location: Location) => void;
 }
 
-const LocationSelector = ({ onLocationSelect, selectedLocation }: LocationSelectorProps) => {
+const LocationSelector = ({ onLocationSelect, selectedLocation, onZoomToLocation }: LocationSelectorProps) => {
   const [open, setOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [coordinates, setCoordinates] = useState({ lat: "", lng: "" });
@@ -52,6 +53,14 @@ const LocationSelector = ({ onLocationSelect, selectedLocation }: LocationSelect
     location.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
+  const handleLocationSelect = (location: Location) => {
+    onLocationSelect(location);
+    if (onZoomToLocation) {
+      onZoomToLocation(location);
+    }
+    setOpen(false);
+  };
+
   return (
     <div className="space-y-6">
       {/* Search by Name with Dropdown */}
@@ -77,7 +86,12 @@ const LocationSelector = ({ onLocationSelect, selectedLocation }: LocationSelect
               <CommandInput 
                 placeholder="Search location..." 
                 value={searchTerm}
-                onValueChange={setSearchTerm}
+                onValueChange={(value) => {
+                  setSearchTerm(value);
+                  if (value && !open) {
+                    setOpen(true);
+                  }
+                }}
               />
               <CommandList>
                 <CommandEmpty>No location found.</CommandEmpty>
@@ -86,10 +100,7 @@ const LocationSelector = ({ onLocationSelect, selectedLocation }: LocationSelect
                     <CommandItem
                       key={`${location.lat}-${location.lng}`}
                       value={location.name}
-                      onSelect={() => {
-                        onLocationSelect(location);
-                        setOpen(false);
-                      }}
+                      onSelect={() => handleLocationSelect(location)}
                     >
                       <MapPin className="mr-2 h-4 w-4 text-primary" />
                       <div className="flex-1">
@@ -184,7 +195,7 @@ const LocationSelector = ({ onLocationSelect, selectedLocation }: LocationSelect
               key={`quick-${location.lat}-${location.lng}`}
               variant="outline"
               size="sm"
-              onClick={() => onLocationSelect(location)}
+              onClick={() => handleLocationSelect(location)}
               className="bg-card/20 hover:bg-card/40 border-border/20 text-xs"
             >
               {location.name.split(',')[0]}

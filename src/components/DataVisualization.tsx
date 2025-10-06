@@ -78,23 +78,23 @@ const generateMockData = (variables: string[], type: string) => {
 };
 
 const probabilityData = [
-  { name: 'Muito Baixo', value: 15, fill: '#10B981' },
-  { name: 'Baixo', value: 25, fill: '#3B82F6' },
-  { name: 'Moderado', value: 35, fill: '#F59E0B' },
-  { name: 'Alto', value: 20, fill: '#EF4444' },
-  { name: 'Extremo', value: 5, fill: '#7C2D12' },
+  { name: 'Very Low', value: 15, fill: '#10B981' },
+  { name: 'Low', value: 25, fill: '#3B82F6' },
+  { name: 'Moderate', value: 35, fill: '#F59E0B' },
+  { name: 'High', value: 20, fill: '#EF4444' },
+  { name: 'Extreme', value: 5, fill: '#7C2D12' },
 ];
 
 const variableNames: Record<string, string> = {
-  temperature: 'Temperatura',
-  precipitation: 'Precipitação',
-  wind_speed: 'Velocidade do Vento',
-  humidity: 'Umidade Relativa',
-  visibility: 'Visibilidade',
-  solar_radiation: 'Radiação Solar',
-  cloud_cover: 'Cobertura de Nuvens',
-  pressure: 'Pressão Atmosférica',
-  air_quality: 'Qualidade do Ar'
+  temperature: 'Temperature',
+  precipitation: 'Precipitation',
+  wind_speed: 'Wind Speed',
+  humidity: 'Relative Humidity',
+  visibility: 'Visibility',
+  solar_radiation: 'Solar Radiation',
+  cloud_cover: 'Cloud Cover',
+  pressure: 'Atmospheric Pressure',
+  air_quality: 'Air Quality'
 };
 
 const variableUnits: Record<string, string> = {
@@ -132,9 +132,9 @@ const DataVisualization = ({ location, variables, dateRange, type }: DataVisuali
       <Card className="bg-card/50 backdrop-blur-md border-border/20 shadow-data-card">
         <CardContent className="p-12 text-center">
           <MapPin className="h-12 w-12 mx-auto mb-4 text-muted-foreground" />
-          <h3 className="text-lg font-semibold mb-2 text-foreground">Selecione uma Localização</h3>
+          <h3 className="text-lg font-semibold mb-2 text-foreground">Select a Location</h3>
           <p className="text-muted-foreground">
-            Escolha uma localização para visualizar os dados climáticos
+            Choose a location to view climate data
           </p>
         </CardContent>
       </Card>
@@ -146,9 +146,9 @@ const DataVisualization = ({ location, variables, dateRange, type }: DataVisuali
       <Card className="bg-card/50 backdrop-blur-md border-border/20 shadow-data-card">
         <CardContent className="p-12 text-center">
           <Activity className="h-12 w-12 mx-auto mb-4 text-muted-foreground" />
-          <h3 className="text-lg font-semibold mb-2 text-foreground">Selecione Variáveis</h3>
+          <h3 className="text-lg font-semibold mb-2 text-foreground">Select Variables</h3>
           <p className="text-muted-foreground">
-            Escolha pelo menos uma variável climática para análise
+            Choose at least one climate variable for analysis
           </p>
         </CardContent>
       </Card>
@@ -160,28 +160,28 @@ const DataVisualization = ({ location, variables, dateRange, type }: DataVisuali
       {/* Resumo da Localização */}
       <Card className="bg-data-gradient border-primary/30">
         <CardHeader className="pb-3">
-          <CardTitle className="flex items-center gap-2">
-            <MapPin className="h-5 w-5 text-primary" />
-            Análise para {location.name}
-          </CardTitle>
-          <CardDescription>
-            Coordenadas: {location.lat.toFixed(4)}, {location.lng.toFixed(4)}
-          </CardDescription>
+            <CardTitle className="flex items-center gap-2">
+              <MapPin className="h-5 w-5 text-primary" />
+              Analysis for {location.name}
+            </CardTitle>
+            <CardDescription>
+              Coordinates: {location.lat.toFixed(4)}, {location.lng.toFixed(4)}
+            </CardDescription>
         </CardHeader>
         <CardContent>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div className="text-center">
               <Badge variant="secondary" className="bg-primary/20 text-primary mb-2">
-                Variáveis Ativas
+                Active Variables
               </Badge>
               <p className="text-2xl font-bold text-foreground">{variables.length}</p>
             </div>
             <div className="text-center">
               <Badge variant="secondary" className="bg-accent/20 text-accent mb-2">
-                Período de Análise
+                Analysis Period
               </Badge>
               <p className="text-sm text-muted-foreground">
-                {dateRange.start || 'Não definido'} - {dateRange.end || 'Não definido'}
+                {dateRange.start || 'Not set'} - {dateRange.end || 'Not set'}
               </p>
             </div>
             <div className="text-center">
@@ -190,7 +190,7 @@ const DataVisualization = ({ location, variables, dateRange, type }: DataVisuali
               </Badge>
               <div className="flex items-center justify-center gap-1">
                 <CheckCircle className="h-4 w-4 text-accent" />
-                <span className="text-sm text-accent">Dados Disponíveis</span>
+                <span className="text-sm text-accent">Data Available</span>
               </div>
             </div>
           </div>
@@ -208,7 +208,7 @@ const DataVisualization = ({ location, variables, dateRange, type }: DataVisuali
               </Badge>
             </CardTitle>
             <CardDescription>
-              Série temporal dos últimos 30 dias
+              Time series from the last 30 days
             </CardDescription>
           </CardHeader>
           <CardContent>
@@ -254,10 +254,10 @@ const DataVisualization = ({ location, variables, dateRange, type }: DataVisuali
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
               <Gauge className="h-5 w-5 text-primary" />
-              Distribuição de Probabilidades
+              Probability Distribution
             </CardTitle>
             <CardDescription>
-              Probabilidade de condições extremas para {location.name}
+              Probability of extreme conditions for {location.name}
             </CardDescription>
           </CardHeader>
           <CardContent>
@@ -285,15 +285,15 @@ const DataVisualization = ({ location, variables, dateRange, type }: DataVisuali
 
         <Card className="bg-card/50 backdrop-blur-md border-border/20 shadow-data-card">
           <CardHeader>
-            <CardTitle>Alertas e Recomendações</CardTitle>
+            <CardTitle>Alerts and Recommendations</CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
             <div className="flex items-start gap-3 p-3 bg-destructive/10 border border-destructive/20 rounded-lg">
               <AlertTriangle className="h-5 w-5 text-destructive mt-0.5" />
               <div>
-                <h4 className="font-semibold text-destructive mb-1">Alto Risco</h4>
+                <h4 className="font-semibold text-destructive mb-1">High Risk</h4>
                 <p className="text-sm text-muted-foreground">
-                  25% de chance de condições extremas nos próximos 7 dias
+                  25% chance of extreme conditions in the next 7 days
                 </p>
               </div>
             </div>
@@ -301,9 +301,9 @@ const DataVisualization = ({ location, variables, dateRange, type }: DataVisuali
             <div className="flex items-start gap-3 p-3 bg-primary/10 border border-primary/20 rounded-lg">
               <Info className="h-5 w-5 text-primary mt-0.5" />
               <div>
-                <h4 className="font-semibold text-primary mb-1">Informação</h4>
+                <h4 className="font-semibold text-primary mb-1">Information</h4>
                 <p className="text-sm text-muted-foreground">
-                  Condições ideais para atividades ao ar livre: 60% de probabilidade
+                  Ideal conditions for outdoor activities: 60% probability
                 </p>
               </div>
             </div>
@@ -311,9 +311,9 @@ const DataVisualization = ({ location, variables, dateRange, type }: DataVisuali
             <div className="flex items-start gap-3 p-3 bg-accent/10 border border-accent/20 rounded-lg">
               <CheckCircle className="h-5 w-5 text-accent mt-0.5" />
               <div>
-                <h4 className="font-semibold text-accent mb-1">Estável</h4>
+                <h4 className="font-semibold text-accent mb-1">Stable</h4>
                 <p className="text-sm text-muted-foreground">
-                  Condições meteorológicas estáveis previstas
+                  Stable weather conditions expected
                 </p>
               </div>
             </div>
@@ -327,13 +327,13 @@ const DataVisualization = ({ location, variables, dateRange, type }: DataVisuali
     <div className="space-y-6">
       <Card className="bg-card/50 backdrop-blur-md border-border/20 shadow-data-card">
         <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <TrendingUp className="h-5 w-5 text-primary" />
-            Análise de Tendências
-          </CardTitle>
-          <CardDescription>
-            Comparação temporal das variáveis selecionadas
-          </CardDescription>
+            <CardTitle className="flex items-center gap-2">
+              <TrendingUp className="h-5 w-5 text-primary" />
+              Trend Analysis
+            </CardTitle>
+            <CardDescription>
+              Temporal comparison of selected variables
+            </CardDescription>
         </CardHeader>
         <CardContent>
           <ResponsiveContainer width="100%" height={400}>
@@ -404,15 +404,15 @@ const DataVisualization = ({ location, variables, dateRange, type }: DataVisuali
                 </h4>
                 <div className="space-y-2 text-sm">
                   <div className="flex justify-between">
-                    <span className="text-muted-foreground">Média:</span>
+                    <span className="text-muted-foreground">Average:</span>
                     <span className="font-medium">{avg.toFixed(1)} {variableUnits[variable]}</span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-muted-foreground">Máximo:</span>
+                    <span className="text-muted-foreground">Maximum:</span>
                     <span className="font-medium">{max.toFixed(1)} {variableUnits[variable]}</span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-muted-foreground">Mínimo:</span>
+                    <span className="text-muted-foreground">Minimum:</span>
                     <span className="font-medium">{min.toFixed(1)} {variableUnits[variable]}</span>
                   </div>
                 </div>

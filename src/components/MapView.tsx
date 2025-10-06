@@ -7,12 +7,14 @@ interface MapViewProps {
   zoom?: number;
   marker?: [number, number] | null;
   onLocationSelect?: (lat: number, lon: number) => void;
+  onZoomChange?: (zoom: number) => void;
 }
 
-export const MapView = ({ center, zoom = 4, marker, onLocationSelect }: MapViewProps) => {
+export const MapView = ({ center, zoom = 4, marker, onLocationSelect, onZoomChange }: MapViewProps) => {
   const mapRef = useRef<HTMLDivElement>(null);
   const mapInstanceRef = useRef<L.Map | null>(null);
   const markerRef = useRef<L.Marker | null>(null);
+  const currentZoomRef = useRef<number>(zoom);
 
   useEffect(() => {
     if (!mapRef.current || mapInstanceRef.current) return;
@@ -24,6 +26,15 @@ export const MapView = ({ center, zoom = 4, marker, onLocationSelect }: MapViewP
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
     }).addTo(map);
+
+    // Track zoom changes
+    map.on('zoomend', () => {
+      const newZoom = map.getZoom();
+      currentZoomRef.current = newZoom;
+      if (onZoomChange) {
+        onZoomChange(newZoom);
+      }
+    });
 
     // Add click event listener
     if (onLocationSelect) {
@@ -40,10 +51,12 @@ export const MapView = ({ center, zoom = 4, marker, onLocationSelect }: MapViewP
     };
   }, [onLocationSelect]);
 
-  // Update map view when center or zoom changes
+  // Update map view when center changes, but preserve current zoom unless explicitly changed
   useEffect(() => {
-    if (mapInstanceRef.current) {
-      mapInstanceRef.current.setView(center, zoom);
+    if (mapInstanceRef.current && center) {
+      // Use current zoom if zoom prop hasn't changed, otherwise use the new zoom
+      const targetZoom = zoom === currentZoomRef.current ? currentZoomRef.current : zoom;
+      mapInstanceRef.current.setView(center, targetZoom, { animate: true });
     }
   }, [center, zoom]);
 

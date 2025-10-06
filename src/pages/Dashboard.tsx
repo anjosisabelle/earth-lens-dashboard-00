@@ -43,6 +43,11 @@ const Dashboard = () => {
     });
   };
 
+  const handleZoomToLocation = (location: { lat: number; lng: number; name: string }) => {
+    // This could be used if Dashboard has a map view in the future
+    console.log("Zoom to location:", location);
+  };
+
   return (
     <div className="min-h-screen bg-space-gradient">
       {/* Header */}
@@ -82,6 +87,7 @@ const Dashboard = () => {
               <LocationSelector 
                 onLocationSelect={setSelectedLocation}
                 selectedLocation={selectedLocation}
+                onZoomToLocation={handleZoomToLocation}
               />
             </CardContent>
           </Card>
