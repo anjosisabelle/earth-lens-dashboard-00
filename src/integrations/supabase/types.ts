@@ -58,17 +58,7 @@ export type Database = {
       }
     }
     Views: {
-      daily_weather_summary: {
-        Row: {
-          avg_humidity_pct: number | null
-          avg_temp_c: number | null
-          date: string | null
-          lat: number | null
-          lon: number | null
-          total_precip_mm: number | null
-        }
-        Relationships: []
-      }
+      [_ in never]: never
     }
     Functions: {
       [_ in never]: never
