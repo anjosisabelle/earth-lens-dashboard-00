@@ -19,29 +19,29 @@ const Index = () => {
   const [marker, setMarker] = useState<[number, number] | null>(null);
 
   const activities = [
-    { id: "trilha" as Activity, icon: Mountain, label: "Trilha" },
-    { id: "praia" as Activity, icon: Waves, label: "Praia" },
-    { id: "piquenique" as Activity, icon: TreePine, label: "Piquenique" },
-    { id: "ciclismo" as Activity, icon: Bike, label: "Ciclismo" },
+    { id: "trilha" as Activity, icon: Mountain, label: "Hiking" },
+    { id: "praia" as Activity, icon: Waves, label: "Beach" },
+    { id: "piquenique" as Activity, icon: TreePine, label: "Picnic" },
+    { id: "ciclismo" as Activity, icon: Bike, label: "Cycling" },
     { id: "camping" as Activity, icon: Tent, label: "Camping" },
-    { id: "fotografia" as Activity, icon: Camera, label: "Fotografia" },
-    { id: "pesca" as Activity, icon: Fish, label: "Pesca" },
-    { id: "surf" as Activity, icon: Waves, label: "Surf" },
-    { id: "parapente" as Activity, icon: Wind, label: "Parapente" },
-    { id: "esqui" as Activity, icon: Snowflake, label: "Esqui" },
-    { id: "caiaque" as Activity, icon: Waves, label: "Caiaque" },
-    { id: "observacao" as Activity, icon: Sun, label: "Observação" },
+    { id: "fotografia" as Activity, icon: Camera, label: "Photography" },
+    { id: "pesca" as Activity, icon: Fish, label: "Fishing" },
+    { id: "surf" as Activity, icon: Waves, label: "Surfing" },
+    { id: "parapente" as Activity, icon: Wind, label: "Paragliding" },
+    { id: "esqui" as Activity, icon: Snowflake, label: "Skiing" },
+    { id: "caiaque" as Activity, icon: Waves, label: "Kayaking" },
+    { id: "observacao" as Activity, icon: Sun, label: "Stargazing" },
   ];
 
   const handleAnalyze = () => {
-    console.log("Analisando clima para:", { searchTerm, selectedActivity, adventureDate });
+    console.log("Analyzing climate for:", { searchTerm, selectedActivity, adventureDate });
   };
 
   const handleFetchWeather = async () => {
     if (!marker) {
       toast({
-        title: "Localização não selecionada",
-        description: "Por favor, selecione uma localização no mapa.",
+        title: "Location not selected",
+        description: "Please select a location on the map.",
         variant: "destructive",
       });
       return;
@@ -49,15 +49,15 @@ const Index = () => {
 
     if (!adventureDate) {
       toast({
-        title: "Data não selecionada",
-        description: "Por favor, selecione a data da aventura.",
+        title: "Date not selected",
+        description: "Please select the adventure date.",
         variant: "destructive",
       });
       return;
     }
 
     try {
-      // Formatar data para YYYYMMDD
+      // Format date to YYYYMMDD
       const dateFormatted = adventureDate.replace(/-/g, "");
       
       const { data, error } = await supabase.functions.invoke("fetch_weather", {
@@ -72,14 +72,14 @@ const Index = () => {
       if (error) throw error;
 
       toast({
-        title: "✅ Dados climáticos atualizados com sucesso!",
-        description: "Os dados do clima foram atualizados para a localização selecionada.",
+        title: "✅ Climate data updated successfully!",
+        description: "Weather data has been updated for the selected location.",
       });
     } catch (error) {
-      console.error("Erro ao buscar dados climáticos:", error);
+      console.error("Error fetching climate data:", error);
       toast({
-        title: "Erro ao buscar dados",
-        description: "Não foi possível buscar os dados climáticos. Tente novamente.",
+        title: "Error fetching data",
+        description: "Could not fetch climate data. Please try again.",
         variant: "destructive",
       });
     }
@@ -105,11 +105,11 @@ const Index = () => {
             {/* Location Selection */}
             <div>
               <h2 className="text-lg font-semibold mb-3 text-card-foreground">
-                Selecione o local
+                Select location
               </h2>
               <div className="relative">
                 <Input
-                  placeholder="Cidade, parque..."
+                  placeholder="City, park..."
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
                   className="pr-10"
@@ -127,7 +127,7 @@ const Index = () => {
             {/* Activity Type */}
             <div>
               <h2 className="text-lg font-semibold mb-3 text-card-foreground">
-                Tipo de atividade:
+                Activity type:
               </h2>
               <div className="grid grid-cols-3 gap-2 max-h-96 overflow-y-auto">
                 {activities.map((activity) => {
@@ -156,7 +156,7 @@ const Index = () => {
             {/* Adventure Date */}
             <div>
               <h2 className="text-lg font-semibold mb-3 text-card-foreground">
-                Data da aventura
+                Adventure date
               </h2>
               <Input
                 type="date"
@@ -173,7 +173,7 @@ const Index = () => {
               size="lg"
               disabled={!searchTerm || !selectedActivity || !adventureDate}
             >
-              Analisar Clima
+              Analyze Climate
             </Button>
           </div>
         </aside>
@@ -187,7 +187,6 @@ const Index = () => {
               marker={marker}
               onLocationSelect={(lat, lon) => {
                 setMarker([lat, lon]);
-                setMapCenter([lat, lon]);
               }}
             />
           </div>

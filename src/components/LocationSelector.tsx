@@ -4,7 +4,10 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { MapPin, Search, Globe, Navigation } from "lucide-react";
+import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from "@/components/ui/command";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { MapPin, Search, Globe, Navigation, Check } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 interface Location {
   lat: number;
@@ -18,17 +21,18 @@ interface LocationSelectorProps {
 }
 
 const LocationSelector = ({ onLocationSelect, selectedLocation }: LocationSelectorProps) => {
+  const [open, setOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [coordinates, setCoordinates] = useState({ lat: "", lng: "" });
 
-  // Localizações predefinidas para demonstração
+  // Predefined locations for demonstration
   const predefinedLocations = [
     { lat: -23.5505, lng: -46.6333, name: "São Paulo, BR" },
-    { lat: 40.7128, lng: -74.0060, name: "Nova York, EUA" },
-    { lat: 51.5074, lng: -0.1278, name: "Londres, Reino Unido" },
-    { lat: 35.6762, lng: 139.6503, name: "Tóquio, Japão" },
+    { lat: 40.7128, lng: -74.0060, name: "New York, USA" },
+    { lat: 51.5074, lng: -0.1278, name: "London, UK" },
+    { lat: 35.6762, lng: 139.6503, name: "Tokyo, Japan" },
     { lat: -15.7942, lng: -47.8822, name: "Brasília, BR" },
-    { lat: 48.8566, lng: 2.3522, name: "Paris, França" },
+    { lat: 48.8566, lng: 2.3522, name: "Paris, France" },
   ];
 
   const handleCoordinateSubmit = () => {
@@ -50,54 +54,72 @@ const LocationSelector = ({ onLocationSelect, selectedLocation }: LocationSelect
 
   return (
     <div className="space-y-6">
-      {/* Busca por Nome */}
+      {/* Search by Name with Dropdown */}
       <div className="space-y-3">
         <Label className="text-sm font-medium flex items-center gap-2">
           <Search className="h-4 w-4" />
-          Buscar por Cidade
+          Search by City
         </Label>
-        <div className="relative">
-          <Input
-            placeholder="Digite o nome da cidade..."
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            className="bg-input/50 pr-10"
-          />
-          <Search className="absolute right-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-        </div>
+        <Popover open={open} onOpenChange={setOpen}>
+          <PopoverTrigger asChild>
+            <Button
+              variant="outline"
+              role="combobox"
+              aria-expanded={open}
+              className="w-full justify-between bg-input/50 h-10"
+            >
+              {selectedLocation?.name || "Type city name..."}
+              <Search className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+            </Button>
+          </PopoverTrigger>
+          <PopoverContent className="w-full p-0 bg-popover" align="start">
+            <Command>
+              <CommandInput 
+                placeholder="Search location..." 
+                value={searchTerm}
+                onValueChange={setSearchTerm}
+              />
+              <CommandList>
+                <CommandEmpty>No location found.</CommandEmpty>
+                <CommandGroup heading="SUGGESTED LOCATIONS">
+                  {filteredLocations.map((location) => (
+                    <CommandItem
+                      key={`${location.lat}-${location.lng}`}
+                      value={location.name}
+                      onSelect={() => {
+                        onLocationSelect(location);
+                        setOpen(false);
+                      }}
+                    >
+                      <MapPin className="mr-2 h-4 w-4 text-primary" />
+                      <div className="flex-1">
+                        <div>{location.name}</div>
+                        <div className="text-xs text-muted-foreground">
+                          {location.lat.toFixed(2)}, {location.lng.toFixed(2)}
+                        </div>
+                      </div>
+                      <Check
+                        className={cn(
+                          "ml-auto h-4 w-4",
+                          selectedLocation?.name === location.name
+                            ? "opacity-100"
+                            : "opacity-0"
+                        )}
+                      />
+                    </CommandItem>
+                  ))}
+                </CommandGroup>
+              </CommandList>
+            </Command>
+          </PopoverContent>
+        </Popover>
       </div>
 
-      {/* Localizações Sugeridas */}
-      {searchTerm && (
-        <div className="space-y-2">
-          <Label className="text-xs font-medium text-muted-foreground">LOCALIZAÇÕES SUGERIDAS</Label>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 max-h-40 overflow-y-auto">
-            {filteredLocations.map((location) => (
-              <Button
-                key={`${location.lat}-${location.lng}`}
-                variant="outline"
-                size="sm"
-                onClick={() => onLocationSelect(location)}
-                className="justify-start h-auto p-3 bg-card/30 hover:bg-card/50 border-border/30"
-              >
-                <MapPin className="h-4 w-4 mr-2 text-primary" />
-                <div className="text-left">
-                  <div className="font-medium">{location.name}</div>
-                  <div className="text-xs text-muted-foreground">
-                    {location.lat.toFixed(2)}, {location.lng.toFixed(2)}
-                  </div>
-                </div>
-              </Button>
-            ))}
-          </div>
-        </div>
-      )}
-
-      {/* Entrada Manual de Coordenadas */}
+      {/* Manual Coordinate Entry */}
       <div className="space-y-3">
         <Label className="text-sm font-medium flex items-center gap-2">
           <Navigation className="h-4 w-4" />
-          Coordenadas Manuais
+          Manual Coordinates
         </Label>
         <div className="grid grid-cols-2 gap-3">
           <div className="space-y-1">
@@ -129,18 +151,18 @@ const LocationSelector = ({ onLocationSelect, selectedLocation }: LocationSelect
           disabled={!coordinates.lat || !coordinates.lng}
         >
           <Globe className="h-4 w-4 mr-2" />
-          Definir Localização
+          Set Location
         </Button>
       </div>
 
-      {/* Localização Selecionada */}
+      {/* Selected Location */}
       {selectedLocation && (
         <Card className="bg-data-gradient border-primary/30">
           <CardContent className="p-4">
             <div className="flex items-start justify-between">
               <div>
                 <Badge variant="secondary" className="bg-primary/20 text-primary mb-2">
-                  Localização Ativa
+                  Active Location
                 </Badge>
                 <h4 className="font-semibold text-foreground">{selectedLocation.name}</h4>
                 <p className="text-sm text-muted-foreground">
@@ -153,9 +175,9 @@ const LocationSelector = ({ onLocationSelect, selectedLocation }: LocationSelect
         </Card>
       )}
 
-      {/* Localizações Rápidas */}
+      {/* Quick Access */}
       <div className="space-y-3">
-        <Label className="text-xs font-medium text-muted-foreground">ACESSO RÁPIDO</Label>
+        <Label className="text-xs font-medium text-muted-foreground">QUICK ACCESS</Label>
         <div className="flex flex-wrap gap-2">
           {predefinedLocations.slice(0, 4).map((location) => (
             <Button

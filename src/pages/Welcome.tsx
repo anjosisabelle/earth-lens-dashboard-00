@@ -9,33 +9,33 @@ const Welcome = () => {
   const features = [
     {
       icon: Satellite,
-      title: "Dados da NASA",
-      description: "Utilizamos dados históricos de observação da Terra da NASA para análise precisa"
+      title: "NASA Data",
+      description: "We use NASA's historical Earth observation data for accurate analysis"
     },
     {
       icon: CloudRain,
-      title: "Probabilidades Climáticas",
-      description: "Calcule a probabilidade de condições adversas para seu local e data"
+      title: "Climate Probabilities",
+      description: "Calculate the probability of adverse conditions for your location and date"
     },
     {
       icon: Wind,
-      title: "Múltiplas Variáveis",
-      description: "Analise temperatura, precipitação, vento, umidade e qualidade do ar"
+      title: "Multiple Variables",
+      description: "Analyze temperature, precipitation, wind, humidity and air quality"
     },
     {
       icon: MapPin,
-      title: "Qualquer Localização",
-      description: "Selecione qualquer ponto no mapa ou digite o nome do local"
+      title: "Any Location",
+      description: "Select any point on the map or type the location name"
     },
     {
       icon: TrendingUp,
-      title: "Tendências Históricas",
-      description: "Veja como as condições mudaram ao longo das décadas"
+      title: "Historical Trends",
+      description: "See how conditions have changed over the decades"
     },
     {
       icon: Thermometer,
-      title: "Sugestões Inteligentes",
-      description: "IA recomenda locais alternativos quando o clima não está ideal"
+      title: "Smart Suggestions",
+      description: "AI recommends alternative locations when weather isn't ideal"
     }
   ];
 
@@ -51,17 +51,17 @@ const Welcome = () => {
             ClimaCerto
           </h1>
           <p className="text-xl md:text-2xl text-muted-foreground mb-4">
-            Planejamento Inteligente de Atividades ao Ar Livre
+            Smart Outdoor Activity Planning
           </p>
           <p className="text-lg text-muted-foreground mb-8">
-            Desenvolvido com dados de observação da Terra da NASA para o Hackathon Brasil
+            Developed with NASA Earth observation data for Hackathon Brasil
           </p>
           <Button 
             onClick={() => navigate('/dashboard')}
             size="lg"
             className="text-lg px-8 py-6 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
           >
-            Começar Análise Climática
+            Start Climate Analysis
           </Button>
         </div>
 
@@ -81,21 +81,21 @@ const Welcome = () => {
 
         {/* About Section */}
         <Card className="p-8 max-w-4xl mx-auto bg-card/50 backdrop-blur">
-          <h2 className="text-2xl font-bold mb-4">Sobre o Projeto</h2>
+          <h2 className="text-2xl font-bold mb-4">About the Project</h2>
           <div className="space-y-4 text-muted-foreground">
             <p>
-              O ClimaCerto utiliza décadas de dados de observação da Terra da NASA para fornecer 
-              informações sobre a probabilidade de condições climáticas específicas em qualquer 
-              localização e época do ano.
+              ClimaCerto uses decades of NASA Earth observation data to provide 
+              information about the probability of specific climate conditions at any 
+              location and time of year.
             </p>
             <p>
-              Diferente de previsões meteorológicas, nosso sistema analisa dados históricos para 
-              determinar as chances de condições extremas como: calor intenso, frio extremo, 
-              ventos fortes, chuvas intensas ou condições desconfortáveis.
+              Unlike weather forecasts, our system analyzes historical data to 
+              determine the chances of extreme conditions such as: intense heat, extreme cold, 
+              strong winds, heavy rain or uncomfortable conditions.
             </p>
             <p className="font-semibold text-foreground">
-              Planeje suas atividades ao ar livre com confiança, sabendo exatamente quais são 
-              as probabilidades climáticas para o local e data escolhidos.
+              Plan your outdoor activities with confidence, knowing exactly what 
+              the climate probabilities are for your chosen location and date.
             </p>
           </div>
         </Card>

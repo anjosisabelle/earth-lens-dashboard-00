@@ -35,7 +35,7 @@ const Dashboard = () => {
   });
 
   const handleDownloadData = (format: 'csv' | 'json') => {
-    // Placeholder para funcionalidade de download
+    // Placeholder for download functionality
     console.log(`Downloading data in ${format} format for:`, {
       location: selectedLocation,
       variables: selectedVariables,
@@ -55,7 +55,7 @@ const Dashboard = () => {
             </Link>
             <div className="flex items-center space-x-4">
               <Badge variant="secondary" className="bg-primary/20 text-primary border-primary/30">
-                Dashboard Ativo
+                Active Dashboard
               </Badge>
               <Button variant="ghost" size="icon">
                 <Settings className="h-5 w-5" />
@@ -66,16 +66,16 @@ const Dashboard = () => {
       </header>
 
       <div className="container mx-auto p-6 space-y-6">
-        {/* Status e Localização */}
+        {/* Status and Location */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           <Card className="lg:col-span-2 bg-card/50 backdrop-blur-md border-border/20 shadow-data-card">
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
                 <MapPin className="h-5 w-5 text-primary" />
-                Seleção de Localização
+                Location Selection
               </CardTitle>
               <CardDescription>
-                Escolha a localização para análise de dados climáticos
+                Choose the location for climate data analysis
               </CardDescription>
             </CardHeader>
             <CardContent>
@@ -90,12 +90,12 @@ const Dashboard = () => {
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
                 <Calendar className="h-5 w-5 text-primary" />
-                Período Temporal
+                Time Period
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
               <div className="space-y-2">
-                <Label htmlFor="start-date">Data Inicial</Label>
+                <Label htmlFor="start-date">Start Date</Label>
                 <Input
                   id="start-date"
                   type="date"
@@ -105,7 +105,7 @@ const Dashboard = () => {
                 />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="end-date">Data Final</Label>
+                <Label htmlFor="end-date">End Date</Label>
                 <Input
                   id="end-date"
                   type="date"
@@ -118,15 +118,15 @@ const Dashboard = () => {
           </Card>
         </div>
 
-        {/* Filtros de Variáveis Climáticas */}
+        {/* Climate Variables Filters */}
         <Card className="bg-card/50 backdrop-blur-md border-border/20 shadow-data-card">
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
               <Cloud className="h-5 w-5 text-primary" />
-              Variáveis Climáticas
+              Climate Variables
             </CardTitle>
             <CardDescription>
-              Selecione as variáveis ambientais para análise
+              Select environmental variables for analysis
             </CardDescription>
           </CardHeader>
           <CardContent>
@@ -137,7 +137,7 @@ const Dashboard = () => {
           </CardContent>
         </Card>
 
-        {/* Índice de Adequação de Atividade (IAA) */}
+        {/* Activity Suitability Index (ASI) */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           <ActivitySelector
             selectedActivity={selectedActivity}
@@ -150,23 +150,23 @@ const Dashboard = () => {
           />
         </div>
 
-        {/* Visualizações */}
+        {/* Visualizations */}
         <Tabs defaultValue="overview" className="space-y-6">
           <TabsList className="grid w-full grid-cols-5 bg-secondary/50 backdrop-blur-md">
             <TabsTrigger value="overview" className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">
-              Visão Geral
+              Overview
             </TabsTrigger>
             <TabsTrigger value="iaa" className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">
-              IAA Detalhado
+              Detailed ASI
             </TabsTrigger>
             <TabsTrigger value="probability" className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">
-              Probabilidades
+              Probabilities
             </TabsTrigger>
             <TabsTrigger value="trends" className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">
-              Tendências
+              Trends
             </TabsTrigger>
             <TabsTrigger value="export" className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">
-              Exportar
+              Export
             </TabsTrigger>
           </TabsList>
 
@@ -191,33 +191,33 @@ const Dashboard = () => {
                   <CardHeader>
                     <CardTitle className="flex items-center gap-2">
                       <TrendingUp className="h-5 w-5 text-primary" />
-                      Análise Detalhada - {selectedActivity.name}
+                      Detailed Analysis - {selectedActivity.name}
                     </CardTitle>
                     <CardDescription>
-                      Histórico de adequação e recomendações personalizadas
+                      Suitability history and personalized recommendations
                     </CardDescription>
                   </CardHeader>
                   <CardContent>
                     <div className="space-y-4">
                       <div className="p-4 bg-data-gradient rounded-lg border border-primary/20">
-                        <h4 className="font-semibold mb-2 text-foreground">Sobre o IAA:</h4>
+                        <h4 className="font-semibold mb-2 text-foreground">About ASI:</h4>
                         <p className="text-sm text-muted-foreground mb-3">
-                          O Índice de Adequação de Atividade (IAA) é calculado com base em dados históricos 
-                          da NASA, considerando temperatura, umidade, velocidade do vento e precipitação. 
-                          O índice varia de 0-100, onde valores mais altos indicam melhores condições.
+                          The Activity Suitability Index (ASI) is calculated based on NASA historical data, 
+                          considering temperature, humidity, wind speed, and precipitation. 
+                          The index ranges from 0-100, where higher values indicate better conditions.
                         </p>
                         <div className="grid grid-cols-2 gap-4 text-xs">
                           <div>
-                            <strong className="text-green-400">80-100:</strong> Condições excelentes
+                            <strong className="text-green-400">80-100:</strong> Excellent conditions
                           </div>
                           <div>
-                            <strong className="text-blue-400">60-79:</strong> Condições boas
+                            <strong className="text-blue-400">60-79:</strong> Good conditions
                           </div>
                           <div>
-                            <strong className="text-yellow-400">40-59:</strong> Condições regulares
+                            <strong className="text-yellow-400">40-59:</strong> Fair conditions
                           </div>
                           <div>
-                            <strong className="text-red-400">0-39:</strong> Condições desfavoráveis
+                            <strong className="text-red-400">0-39:</strong> Unfavorable conditions
                           </div>
                         </div>
                       </div>
@@ -251,10 +251,10 @@ const Dashboard = () => {
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
                   <Download className="h-5 w-5 text-primary" />
-                  Exportar Dados
+                  Export Data
                 </CardTitle>
                 <CardDescription>
-                  Baixe os dados selecionados em diferentes formatos
+                  Download selected data in different formats
                 </CardDescription>
               </CardHeader>
               <CardContent className="space-y-6">
@@ -267,7 +267,7 @@ const Dashboard = () => {
                   >
                     <Download className="h-6 w-6 mb-2" />
                     Download CSV
-                    <span className="text-xs opacity-80">Formato de planilha</span>
+                    <span className="text-xs opacity-80">Spreadsheet format</span>
                   </Button>
                   <Button 
                     variant="space" 
@@ -277,18 +277,18 @@ const Dashboard = () => {
                   >
                     <Download className="h-6 w-6 mb-2" />
                     Download JSON
-                    <span className="text-xs opacity-80">Formato de dados estruturados</span>
+                    <span className="text-xs opacity-80">Structured data format</span>
                   </Button>
                 </div>
                 
                 {selectedLocation && (
                   <div className="p-4 bg-data-gradient rounded-lg border border-primary/20">
-                    <h4 className="font-semibold mb-2 text-foreground">Resumo da Exportação:</h4>
+                    <h4 className="font-semibold mb-2 text-foreground">Export Summary:</h4>
                     <ul className="space-y-1 text-sm text-muted-foreground">
-                      <li>• Localização: {selectedLocation.name}</li>
-                      <li>• Variáveis: {selectedVariables.join(', ')}</li>
-                      <li>• Período: {dateRange.start || 'Não definido'} - {dateRange.end || 'Não definido'}</li>
-                      <li>• Metadados incluídos: Unidades, fontes, timestamps</li>
+                      <li>• Location: {selectedLocation.name}</li>
+                      <li>• Variables: {selectedVariables.join(', ')}</li>
+                      <li>• Period: {dateRange.start || 'Not set'} - {dateRange.end || 'Not set'}</li>
+                      <li>• Metadata included: Units, sources, timestamps</li>
                     </ul>
                   </div>
                 )}

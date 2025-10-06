@@ -32,9 +32,9 @@ export interface Activity {
 const activities: Activity[] = [
   {
     id: 'trilha',
-    name: 'Trilha',
+    name: 'Hiking',
     icon: Mountain,
-    description: 'Caminhadas e trilhas em montanha',
+    description: 'Mountain hikes and trails',
     optimalConditions: {
       temperature: { min: 15, max: 28 },
       humidity: { min: 40, max: 70 },
@@ -44,9 +44,9 @@ const activities: Activity[] = [
   },
   {
     id: 'praia',
-    name: 'Dia de Praia',
+    name: 'Beach Day',
     icon: Waves,
-    description: 'Atividades aquáticas e banho de sol',
+    description: 'Water activities and sunbathing',
     optimalConditions: {
       temperature: { min: 25, max: 35 },
       humidity: { min: 50, max: 80 },
@@ -58,7 +58,7 @@ const activities: Activity[] = [
     id: 'camping',
     name: 'Camping',
     icon: Tent,
-    description: 'Acampamento ao ar livre',
+    description: 'Outdoor camping',
     optimalConditions: {
       temperature: { min: 10, max: 25 },
       humidity: { min: 30, max: 65 },
@@ -68,9 +68,9 @@ const activities: Activity[] = [
   },
   {
     id: 'ciclismo',
-    name: 'Ciclismo',
+    name: 'Cycling',
     icon: Bike,
-    description: 'Passeios de bicicleta',
+    description: 'Bike rides',
     optimalConditions: {
       temperature: { min: 12, max: 30 },
       humidity: { min: 35, max: 75 },
@@ -80,9 +80,9 @@ const activities: Activity[] = [
   },
   {
     id: 'fotografia',
-    name: 'Fotografia',
+    name: 'Photography',
     icon: Camera,
-    description: 'Fotografia de paisagem e natureza',
+    description: 'Landscape and nature photography',
     optimalConditions: {
       temperature: { min: 5, max: 35 },
       humidity: { min: 20, max: 90 },
@@ -92,9 +92,9 @@ const activities: Activity[] = [
   },
   {
     id: 'floresta',
-    name: 'Caminhada na Floresta',
+    name: 'Forest Walk',
     icon: TreePine,
-    description: 'Exploração de áreas florestais',
+    description: 'Forest area exploration',
     optimalConditions: {
       temperature: { min: 8, max: 26 },
       humidity: { min: 45, max: 85 },
@@ -104,9 +104,9 @@ const activities: Activity[] = [
   },
   {
     id: 'observacao',
-    name: 'Observação Astronômica',
+    name: 'Stargazing',
     icon: Sun,
-    description: 'Observação de estrelas e planetas',
+    description: 'Star and planet observation',
     optimalConditions: {
       temperature: { min: -5, max: 25 },
       humidity: { min: 20, max: 60 },
@@ -116,9 +116,9 @@ const activities: Activity[] = [
   },
   {
     id: 'esqui',
-    name: 'Esportes de Neve',
+    name: 'Snow Sports',
     icon: Snowflake,
-    description: 'Esqui e snowboard',
+    description: 'Skiing and snowboarding',
     optimalConditions: {
       temperature: { min: -15, max: 5 },
       humidity: { min: 60, max: 90 },
@@ -128,9 +128,9 @@ const activities: Activity[] = [
   },
   {
     id: 'pesca',
-    name: 'Pesca',
+    name: 'Fishing',
     icon: Fish,
-    description: 'Pesca em rios e lagos',
+    description: 'River and lake fishing',
     optimalConditions: {
       temperature: { min: 15, max: 28 },
       humidity: { min: 50, max: 85 },
@@ -140,9 +140,9 @@ const activities: Activity[] = [
   },
   {
     id: 'parapente',
-    name: 'Parapente',
+    name: 'Paragliding',
     icon: Plane,
-    description: 'Voo livre e parapente',
+    description: 'Free flight and paragliding',
     optimalConditions: {
       temperature: { min: 18, max: 32 },
       humidity: { min: 30, max: 70 },
@@ -152,9 +152,9 @@ const activities: Activity[] = [
   },
   {
     id: 'tempestade',
-    name: 'Observação de Tempestades',
+    name: 'Storm Watching',
     icon: Zap,
-    description: 'Storm chasing seguro',
+    description: 'Safe storm chasing',
     optimalConditions: {
       temperature: { min: 20, max: 35 },
       humidity: { min: 70, max: 95 },
@@ -164,9 +164,9 @@ const activities: Activity[] = [
   },
   {
     id: 'kitesurf',
-    name: 'Kitesurf',
+    name: 'Kitesurfing',
     icon: Wind,
-    description: 'Kitesurf e windsurf',
+    description: 'Kitesurfing and windsurfing',
     optimalConditions: {
       temperature: { min: 20, max: 35 },
       humidity: { min: 60, max: 85 },
@@ -189,10 +189,10 @@ const ActivitySelector = ({ selectedActivity, onActivitySelect }: ActivitySelect
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
           <Mountain className="h-5 w-5 text-primary" />
-          Seleção de Atividade
+          Activity Selection
         </CardTitle>
         <CardDescription>
-          Escolha uma atividade para calcular o Índice de Adequação (IAA)
+          Choose an activity to calculate the Suitability Index (ASI)
         </CardDescription>
       </CardHeader>
       <CardContent>
@@ -232,7 +232,7 @@ const ActivitySelector = ({ selectedActivity, onActivitySelect }: ActivitySelect
                   </span>
                   {isSelected && (
                     <Badge variant="secondary" className="text-xs bg-primary/20 text-primary">
-                      Selecionado
+                      Selected
                     </Badge>
                   )}
                 </div>
@@ -251,12 +251,12 @@ const ActivitySelector = ({ selectedActivity, onActivitySelect }: ActivitySelect
         
         {selectedActivity && (
           <div className="mt-6 p-4 bg-data-gradient rounded-lg border border-primary/20">
-            <h4 className="font-semibold mb-2 text-foreground">Condições Ideais para {selectedActivity.name}:</h4>
+            <h4 className="font-semibold mb-2 text-foreground">Ideal Conditions for {selectedActivity.name}:</h4>
             <div className="grid grid-cols-2 gap-2 text-sm text-muted-foreground">
-              <div>• Temperatura: {selectedActivity.optimalConditions.temperature.min}°C - {selectedActivity.optimalConditions.temperature.max}°C</div>
-              <div>• Umidade: {selectedActivity.optimalConditions.humidity.min}% - {selectedActivity.optimalConditions.humidity.max}%</div>
-              <div>• Vento: {selectedActivity.optimalConditions.windSpeed.min} - {selectedActivity.optimalConditions.windSpeed.max} km/h</div>
-              <div>• Precipitação: {selectedActivity.optimalConditions.precipitation.min} - {selectedActivity.optimalConditions.precipitation.max} mm</div>
+              <div>• Temperature: {selectedActivity.optimalConditions.temperature.min}°C - {selectedActivity.optimalConditions.temperature.max}°C</div>
+              <div>• Humidity: {selectedActivity.optimalConditions.humidity.min}% - {selectedActivity.optimalConditions.humidity.max}%</div>
+              <div>• Wind: {selectedActivity.optimalConditions.windSpeed.min} - {selectedActivity.optimalConditions.windSpeed.max} km/h</div>
+              <div>• Precipitation: {selectedActivity.optimalConditions.precipitation.min} - {selectedActivity.optimalConditions.precipitation.max} mm</div>
             </div>
           </div>
         )}

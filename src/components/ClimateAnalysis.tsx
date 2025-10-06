@@ -43,7 +43,7 @@ export const ClimateAnalysis = ({ location, activity, date }: ClimateAnalysisPro
   const generateMockData = (): ClimateData => {
     const requirements = activityRequirements[activity] || activityRequirements.trilha;
     
-    // Simular dados baseados em NASA Earth observations
+    // Simulate data based on NASA Earth observations
     const temperature: ClimateData["temperature"] = {
       value: Math.random() * 35 + 5,
       probability: Math.random() * 100,
@@ -68,7 +68,7 @@ export const ClimateAnalysis = ({ location, activity, date }: ClimateAnalysisPro
       status: "good"
     };
 
-    // Avaliar adequabilidade
+    // Evaluate suitability
     let suitabilityScore = 0;
     
     if (temperature.value >= requirements.temp[0] && temperature.value <= requirements.temp[1]) {
@@ -109,12 +109,12 @@ export const ClimateAnalysis = ({ location, activity, date }: ClimateAnalysisPro
       overallSuitability = "good";
     } else if (suitabilityScore >= 25) {
       overallSuitability = "moderate";
-      aiSuggestion = `Condições moderadas para ${activity} em ${location}. Considere adiar por alguns dias ou verificar locais alternativos.`;
-      alternativeLocation = "Serra da Mantiqueira, SP (85% adequabilidade)";
+      aiSuggestion = `Moderate conditions for ${activity} in ${location}. Consider postponing for a few days or checking alternative locations.`;
+      alternativeLocation = "Serra da Mantiqueira, SP (85% suitability)";
     } else {
       overallSuitability = "poor";
-      aiSuggestion = `Condições inadequadas para ${activity} em ${location} nesta data. Recomendamos fortemente um local alternativo.`;
-      alternativeLocation = "Parque Nacional da Chapada dos Veadeiros, GO (92% adequabilidade)";
+      aiSuggestion = `Unsuitable conditions for ${activity} in ${location} on this date. We strongly recommend an alternative location.`;
+      alternativeLocation = "Chapada dos Veadeiros National Park, GO (92% suitability)";
     }
 
     return {
@@ -130,7 +130,7 @@ export const ClimateAnalysis = ({ location, activity, date }: ClimateAnalysisPro
 
   const fetchClimateData = async () => {
     setLoading(true);
-    // Simular chamada à API da NASA
+    // Simulate NASA API call
     await new Promise(resolve => setTimeout(resolve, 1500));
     const data = generateMockData();
     setClimateData(data);
@@ -165,10 +165,10 @@ ${location},${activity},${date},${climateData.temperature.value.toFixed(1)},${cl
 
   const getSuitabilityBadge = (suitability: ClimateData["overallSuitability"]) => {
     const config = {
-      excellent: { label: "Excelente", className: "bg-green-500" },
-      good: { label: "Bom", className: "bg-blue-500" },
-      moderate: { label: "Moderado", className: "bg-yellow-500" },
-      poor: { label: "Inadequado", className: "bg-red-500" }
+      excellent: { label: "Excellent", className: "bg-green-500" },
+      good: { label: "Good", className: "bg-blue-500" },
+      moderate: { label: "Moderate", className: "bg-yellow-500" },
+      poor: { label: "Poor", className: "bg-red-500" }
     };
     return config[suitability];
   };
@@ -178,7 +178,7 @@ ${location},${activity},${date},${climateData.temperature.value.toFixed(1)},${cl
       <Card className="p-6">
         <div className="flex items-center justify-center space-x-2">
           <RefreshCw className="h-5 w-5 animate-spin text-primary" />
-          <span>Analisando dados históricos da NASA...</span>
+          <span>Analyzing NASA historical data...</span>
         </div>
       </Card>
     );
@@ -193,10 +193,10 @@ ${location},${activity},${date},${climateData.temperature.value.toFixed(1)},${cl
       <Card className="p-6">
         <div className="flex items-start justify-between mb-4">
           <div>
-            <h3 className="text-xl font-bold mb-2">Análise Climática</h3>
+            <h3 className="text-xl font-bold mb-2">Climate Analysis</h3>
             <p className="text-sm text-muted-foreground flex items-center gap-2">
               <MapPin className="h-4 w-4" />
-              {location} • {new Date(date).toLocaleDateString('pt-BR')}
+              {location} • {new Date(date).toLocaleDateString('en-US')}
             </p>
           </div>
           <div className="flex gap-2">
@@ -217,35 +217,35 @@ ${location},${activity},${date},${climateData.temperature.value.toFixed(1)},${cl
 
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-4">
           <div className="space-y-1">
-            <p className="text-xs text-muted-foreground">Temperatura</p>
+            <p className="text-xs text-muted-foreground">Temperature</p>
             <p className={`text-lg font-bold ${getStatusColor(climateData.temperature.status)}`}>
               {climateData.temperature.value.toFixed(1)}°C
             </p>
-            <p className="text-xs text-muted-foreground">{climateData.temperature.probability.toFixed(0)}% probabilidade</p>
+            <p className="text-xs text-muted-foreground">{climateData.temperature.probability.toFixed(0)}% probability</p>
           </div>
           
           <div className="space-y-1">
-            <p className="text-xs text-muted-foreground">Precipitação</p>
+            <p className="text-xs text-muted-foreground">Precipitation</p>
             <p className={`text-lg font-bold ${getStatusColor(climateData.precipitation.status)}`}>
               {climateData.precipitation.value.toFixed(1)}%
             </p>
-            <p className="text-xs text-muted-foreground">{climateData.precipitation.probability.toFixed(0)}% probabilidade</p>
+            <p className="text-xs text-muted-foreground">{climateData.precipitation.probability.toFixed(0)}% probability</p>
           </div>
           
           <div className="space-y-1">
-            <p className="text-xs text-muted-foreground">Vento</p>
+            <p className="text-xs text-muted-foreground">Wind</p>
             <p className={`text-lg font-bold ${getStatusColor(climateData.windSpeed.status)}`}>
               {climateData.windSpeed.value.toFixed(1)} km/h
             </p>
-            <p className="text-xs text-muted-foreground">{climateData.windSpeed.probability.toFixed(0)}% probabilidade</p>
+            <p className="text-xs text-muted-foreground">{climateData.windSpeed.probability.toFixed(0)}% probability</p>
           </div>
           
           <div className="space-y-1">
-            <p className="text-xs text-muted-foreground">Umidade</p>
+            <p className="text-xs text-muted-foreground">Humidity</p>
             <p className={`text-lg font-bold ${getStatusColor(climateData.humidity.status)}`}>
               {climateData.humidity.value.toFixed(1)}%
             </p>
-            <p className="text-xs text-muted-foreground">{climateData.humidity.probability.toFixed(0)}% probabilidade</p>
+            <p className="text-xs text-muted-foreground">{climateData.humidity.probability.toFixed(0)}% probability</p>
           </div>
         </div>
 
@@ -253,7 +253,7 @@ ${location},${activity},${date},${climateData.temperature.value.toFixed(1)},${cl
           <Alert className="mt-4">
             <AlertCircle className="h-4 w-4" />
             <AlertDescription>
-              <p className="font-semibold mb-2">Sugestão da IA</p>
+              <p className="font-semibold mb-2">AI Suggestion</p>
               <p className="mb-2">{climateData.aiSuggestion}</p>
               {climateData.alternativeLocation && (
                 <div className="flex items-center gap-2 mt-2 p-2 bg-primary/10 rounded">
@@ -267,7 +267,7 @@ ${location},${activity},${date},${climateData.temperature.value.toFixed(1)},${cl
 
         <div className="mt-4 p-3 bg-muted rounded-lg text-xs text-muted-foreground">
           <TrendingUp className="h-3 w-3 inline mr-1" />
-          Dados baseados em décadas de observações da Terra pela NASA
+          Data based on decades of NASA Earth observations
         </div>
       </Card>
     </div>

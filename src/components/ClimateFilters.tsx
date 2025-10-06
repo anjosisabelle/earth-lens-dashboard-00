@@ -28,32 +28,32 @@ interface ClimateVariable {
 const climateVariables: ClimateVariable[] = [
   {
     id: 'temperature',
-    name: 'Temperatura',
-    description: 'Temperatura do ar próxima à superfície',
+    name: 'Temperature',
+    description: 'Near-surface air temperature',
     icon: <Thermometer className="h-4 w-4" />,
     unit: '°C',
     category: 'atmospheric'
   },
   {
     id: 'precipitation',
-    name: 'Precipitação',
-    description: 'Quantidade de chuva e neve',
+    name: 'Precipitation',
+    description: 'Rain and snow amount',
     icon: <Droplets className="h-4 w-4" />,
     unit: 'mm',
     category: 'atmospheric'
   },
   {
     id: 'wind_speed',
-    name: 'Velocidade do Vento',
-    description: 'Velocidade do vento próximo à superfície',
+    name: 'Wind Speed',
+    description: 'Near-surface wind speed',
     icon: <Wind className="h-4 w-4" />,
     unit: 'm/s',
     category: 'atmospheric'
   },
   {
     id: 'humidity',
-    name: 'Umidade Relativa',
-    description: 'Umidade relativa do ar',
+    name: 'Relative Humidity',
+    description: 'Air relative humidity',
     icon: <Cloud className="h-4 w-4" />,
     unit: '%',
     category: 'atmospheric'
@@ -134,9 +134,9 @@ const ClimateFilters = ({ selectedVariables, onVariablesChange }: ClimateFilters
   };
 
   const categoryNames = {
-    atmospheric: 'Variáveis Atmosféricas',
-    surface: 'Variáveis de Superfície',
-    environmental: 'Variáveis Ambientais'
+    atmospheric: 'Atmospheric Variables',
+    surface: 'Surface Variables',
+    environmental: 'Environmental Variables'
   };
 
   const categories = ['atmospheric', 'environmental'] as const;
@@ -146,9 +146,9 @@ const ClimateFilters = ({ selectedVariables, onVariablesChange }: ClimateFilters
       {/* Resumo de Seleção */}
       <div className="flex items-center justify-between">
         <div>
-          <h3 className="font-medium text-foreground">Variáveis Selecionadas</h3>
+          <h3 className="font-medium text-foreground">Selected Variables</h3>
           <p className="text-sm text-muted-foreground">
-            {selectedVariables.length} de {climateVariables.length} variáveis
+            {selectedVariables.length} of {climateVariables.length} variables
           </p>
         </div>
         <div className="flex gap-2">
@@ -157,14 +157,14 @@ const ClimateFilters = ({ selectedVariables, onVariablesChange }: ClimateFilters
             size="sm"
             onClick={() => onVariablesChange(climateVariables.map(v => v.id))}
           >
-            Selecionar Todas
+            Select All
           </Button>
           <Button 
             variant="outline" 
             size="sm"
             onClick={() => onVariablesChange([])}
           >
-            Limpar Todas
+            Clear All
           </Button>
         </div>
       </div>
@@ -172,7 +172,7 @@ const ClimateFilters = ({ selectedVariables, onVariablesChange }: ClimateFilters
       {/* Tags das Variáveis Selecionadas */}
       {selectedVariables.length > 0 && (
         <div className="space-y-2">
-          <Label className="text-xs font-medium text-muted-foreground">VARIÁVEIS ATIVAS</Label>
+          <Label className="text-xs font-medium text-muted-foreground">ACTIVE VARIABLES</Label>
           <div className="flex flex-wrap gap-2">
             {selectedVariables.map(varId => {
               const variable = climateVariables.find(v => v.id === varId);
@@ -217,7 +217,7 @@ const ClimateFilters = ({ selectedVariables, onVariablesChange }: ClimateFilters
                     onClick={() => selectAllInCategory(category)}
                     className="text-xs h-7"
                   >
-                    Todas
+                    All
                   </Button>
                   <Button
                     variant="ghost"
@@ -225,7 +225,7 @@ const ClimateFilters = ({ selectedVariables, onVariablesChange }: ClimateFilters
                     onClick={() => clearAllInCategory(category)}
                     className="text-xs h-7"
                   >
-                    Nenhuma
+                    None
                   </Button>
                 </div>
               </div>
