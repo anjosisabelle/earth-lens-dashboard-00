@@ -17,21 +17,58 @@ export type Database = {
       climacerto: {
         Row: {
           created_at: string
+          humidity_pct: number | null
           id: string
+          lat: number | null
+          lon: number | null
+          precip_mm: number | null
+          raw: Json | null
+          source: string | null
+          temp_c: number | null
+          ts: string | null
+          wind_m_s: number | null
         }
         Insert: {
           created_at?: string
+          humidity_pct?: number | null
           id?: string
+          lat?: number | null
+          lon?: number | null
+          precip_mm?: number | null
+          raw?: Json | null
+          source?: string | null
+          temp_c?: number | null
+          ts?: string | null
+          wind_m_s?: number | null
         }
         Update: {
           created_at?: string
+          humidity_pct?: number | null
           id?: string
+          lat?: number | null
+          lon?: number | null
+          precip_mm?: number | null
+          raw?: Json | null
+          source?: string | null
+          temp_c?: number | null
+          ts?: string | null
+          wind_m_s?: number | null
         }
         Relationships: []
       }
     }
     Views: {
-      [_ in never]: never
+      daily_weather_summary: {
+        Row: {
+          avg_humidity_pct: number | null
+          avg_temp_c: number | null
+          date: string | null
+          lat: number | null
+          lon: number | null
+          total_precip_mm: number | null
+        }
+        Relationships: []
+      }
     }
     Functions: {
       [_ in never]: never
