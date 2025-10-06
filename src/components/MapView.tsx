@@ -6,9 +6,10 @@ interface MapViewProps {
   center: [number, number];
   zoom?: number;
   marker?: [number, number] | null;
+  onLocationSelect?: (lat: number, lon: number) => void;
 }
 
-export const MapView = ({ center, zoom = 4, marker }: MapViewProps) => {
+export const MapView = ({ center, zoom = 4, marker, onLocationSelect }: MapViewProps) => {
   const mapRef = useRef<HTMLDivElement>(null);
   const mapInstanceRef = useRef<L.Map | null>(null);
   const markerRef = useRef<L.Marker | null>(null);
@@ -24,13 +25,20 @@ export const MapView = ({ center, zoom = 4, marker }: MapViewProps) => {
       attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
     }).addTo(map);
 
+    // Add click event listener
+    if (onLocationSelect) {
+      map.on('click', (e) => {
+        onLocationSelect(e.latlng.lat, e.latlng.lng);
+      });
+    }
+
     mapInstanceRef.current = map;
 
     return () => {
       map.remove();
       mapInstanceRef.current = null;
     };
-  }, []);
+  }, [onLocationSelect]);
 
   // Update map view when center or zoom changes
   useEffect(() => {
