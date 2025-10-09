@@ -1,11 +1,12 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { MapView } from "@/components/MapView";
 import { ClimateAnalysis } from "@/components/ClimateAnalysis";
 import LocationSelector from "@/components/LocationSelector";
-import { Satellite, Search, Mountain, Waves, TreePine, Bike, Tent, Camera, Fish, Sun, Wind, Snowflake, Umbrella } from "lucide-react";
+import { Satellite, Search, Mountain, Waves, TreePine, Bike, Tent, Camera, Fish, Sun, Wind, Snowflake, Umbrella, Home } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/hooks/use-toast";
@@ -13,6 +14,7 @@ import { toast } from "@/hooks/use-toast";
 type Activity = "trilha" | "praia" | "piquenique" | "ciclismo" | "camping" | "fotografia" | "pesca" | "surf" | "parapente" | "esqui" | "caiaque" | "observacao" | null;
 
 const Index = () => {
+  const navigate = useNavigate();
   const [selectedLocation, setSelectedLocation] = useState<{ lat: number; lng: number; name: string } | null>(null);
   const [selectedActivity, setSelectedActivity] = useState<Activity>(null);
   const [adventureDate, setAdventureDate] = useState("");
@@ -98,9 +100,19 @@ const Index = () => {
       {/* Navigation */}
       <nav className="border-b border-border/20 backdrop-blur-md bg-background/10">
         <div className="container mx-auto px-4 py-4">
-          <div className="flex items-center space-x-2">
-            <Satellite className="h-8 w-8 text-primary" />
-            <h1 className="text-xl font-bold text-foreground">ClimaCerto</h1>
+          <div className="flex items-center justify-between">
+            <div className="flex items-center space-x-2">
+              <Satellite className="h-8 w-8 text-primary" />
+              <h1 className="text-xl font-bold text-foreground">ClimaCerto</h1>
+            </div>
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={() => navigate('/')}
+              title="Página inicial"
+            >
+              <Home className="h-5 w-5" />
+            </Button>
           </div>
         </div>
       </nav>
